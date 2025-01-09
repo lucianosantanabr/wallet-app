@@ -12,6 +12,6 @@ public class LivenessCheck implements HealthCheck {
   @Override
   public HealthCheckResponse call() {
 
-    return HealthCheckResponse.up("APP is active");
+    return HealthCheckResponse.up("Wallet-App is active");
   }
 }

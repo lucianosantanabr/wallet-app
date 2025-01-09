@@ -55,6 +55,8 @@ public class TransferService {
     transferRepo.persist(transfer);
 
     var resp = TransferResponse.of(transfer);
+
+    //chamada assincrona
     CompletableFuture.runAsync(() -> notificationService.sendNotification(resp));
 
     return resp;
@@ -82,5 +84,9 @@ public class TransferService {
 
   public List<TransferResponse> listAll() {
     return transferRepo.listAll().stream().map(TransferResponse::of).toList();
+  }
+
+  public List<TransferEntity> list() {
+    return transferRepo.listAll();
   }
 }

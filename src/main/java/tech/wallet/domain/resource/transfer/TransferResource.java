@@ -15,6 +15,7 @@ import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.jboss.logging.MDC;
 import tech.wallet.application.exception.impl.AuthorizationBusinessErrorException;
 import tech.wallet.application.exception.impl.InsufficientBalanceException;
 import tech.wallet.application.exception.impl.TransferNotAllowForWalletTypeException;
@@ -49,6 +50,8 @@ public class TransferResource implements ResponseUtility {
           InsufficientBalanceException,
           AuthorizationBusinessErrorException {
 
+    MDC.put("Transfer-Payee", request.getPayee());
+
     return created(transferService.transfer(request));
   }
 
@@ -71,7 +74,8 @@ public class TransferResource implements ResponseUtility {
   @GET
   @Path("/autorization")
   public Response isAutorized() throws AuthorizationBusinessErrorException, InterruptedException {
-    Thread.sleep(5000);
+  //  Thread.sleep(5000);
     return ok(authorizationService.isAuthorized());
   }
+
 }
